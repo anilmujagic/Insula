@@ -2,9 +2,9 @@
 bin
 obj
 
-# User settings
+# User Settings
 *.suo
 *.user
 
-# mstest test results
+# MSTest Test Results
 TestResults

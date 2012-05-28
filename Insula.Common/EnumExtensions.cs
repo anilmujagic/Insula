@@ -7,9 +7,9 @@ namespace Insula.Common
 {
     public static class EnumExtensions
     {
-        public static string GetName(this Enum e)
+        public static string GetName(this Enum target)
         {
-            return Enum.GetName(e.GetType(), e);
+            return Enum.GetName(target.GetType(), target);
         }
     }
 }

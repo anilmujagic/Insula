@@ -7,9 +7,9 @@ namespace Insula.Common
 {
     public static class IEnumerableExtensions
     {
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> target)
         {
-            return items == null || !items.Any();
+            return target == null || !target.Any();
         }
     }
 }

@@ -7,58 +7,67 @@ namespace Insula.Common
 {
     public static class StringExtensions
     {
-        public static bool IsNullOrEmpty(this string s)
+        public static bool IsNullOrEmpty(this string target)
         {
-            return String.IsNullOrEmpty(s);
+            return String.IsNullOrEmpty(target);
         }
 
-        public static bool IsNullOrWhiteSpace(this string s)
+        public static bool IsNullOrWhiteSpace(this string target)
         {
             //return String.IsNullOrWhiteSpace(s);  //Not supported by Portable Library
-            return String.IsNullOrEmpty(s) || s.Trim().Length == 0;
+            return String.IsNullOrEmpty(target) || target.Trim().Length == 0;
         }
 
-        public static bool ContainsAny(this string s, IEnumerable<string> values)
+        public static bool ContainsAny(this string target, IEnumerable<string> values)
         {
             if (values.IsNullOrEmpty())
                 return false;
 
             foreach (var value in values)
             {
-                if (s.Contains(value))
+                if (target.Contains(value))
                     return true;
             }
 
             return false;
         }
 
-        public static bool ContainsAll(this string s, IEnumerable<string> values)
+        public static bool ContainsAll(this string target, IEnumerable<string> values)
         {
             if (values.IsNullOrEmpty())
                 return false;
 
             foreach (var value in values)
             {
-                if (!s.Contains(value))
+                if (!target.Contains(value))
                     return false;
             }
 
             return true;
         }
 
-        public static string CleanSpaces(this string s)
+        public static string CleanSpaces(this string target)
         {
-            if (s.IsNullOrEmpty())
-                return s;
+            if (target.IsNullOrEmpty())
+                return target;
 
-            s = s.Trim();
+            target = target.Trim();
 
-            while (s.Contains("  "))
+            while (target.Contains("  "))
             {
-                s = s.Replace("  ", " ");
+                target = target.Replace("  ", " ");
             }
 
-            return s;
+            return target;
+        }
+
+        /// <summary>
+        /// Converts upper case letters, found on left side of the string, to lower case, until lowercase char is reached.
+        /// </summary>
+        /// <param name="target">String to convert</param>
+        public static string ToCamelCase(this string target)
+        {
+            return ToCamelCase(target, 0);
         }
 
         /// <summary>
@@ -70,27 +79,27 @@ namespace Insula.Common
         /// "UIThemeName" is converted to "uiThemeName" if value of stopAfter parameter is 2.
         /// "UIThemeName" is converted to "uIThemeName" if value of stopAfter parameter is 1.
         /// </summary>
-        /// <param name="s">String to convert</param>
+        /// <param name="target">String to convert</param>
         /// <param name="stopAfter">Number of characters after which converting stops. Default value is 0 (converts until lowercase char is reached).</param>
-        public static string ToCamelCase(this string s, int stopAfter = 0)
+        public static string ToCamelCase(this string target, int stopAfter)
         {
             if (stopAfter < 0)
                 throw new ArgumentOutOfRangeException("stopAfter", "Value must be greather than or equal to zero.");
 
-            if (s.IsNullOrWhiteSpace())
-                return s;
+            if (target.IsNullOrWhiteSpace())
+                return target;
 
-            if (stopAfter == 0 || stopAfter > s.Length)
-                stopAfter = s.Length;
+            if (stopAfter == 0 || stopAfter > target.Length)
+                stopAfter = target.Length;
 
             var position = 0;
             while (position < stopAfter)
             {
-                if (s[position] == s.ToUpper()[position])
+                if (target[position] == target.ToUpper()[position])
                 {
-                    var lower = s.Substring(position, 1).ToLower();
-                    s = s.Remove(position, 1);
-                    s = s.Insert(position, lower);
+                    var lower = target.Substring(position, 1).ToLower();
+                    target = target.Remove(position, 1);
+                    target = target.Insert(position, lower);
                 }
                 else
                 {
@@ -100,7 +109,7 @@ namespace Insula.Common
                 position++;
             }
 
-            return s;
+            return target;
         }
     }
 }

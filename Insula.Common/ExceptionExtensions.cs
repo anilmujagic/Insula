@@ -2,27 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace Insula.Common
 {
     public static class ExceptionExtensions
     {
-        public static string GetFullErrorMessageTree(this Exception ex)
+        public static IEnumerable<Exception> GetExceptionTree(this Exception target)
         {
-            if (ex == null)
-                return string.Empty;
+            if (target == null)
+                return Enumerable.Empty<Exception>();
 
-            string message = string.Empty;
+            var exceptions = new List<Exception>();
+            exceptions.Add(target);
 
-            if (ex.Message.IsNullOrWhiteSpace())
-                message = "(none)";
-            else
-                message = ex.Message;
+            if (target.InnerException != null)
+                exceptions.AddRange(target.InnerException.GetExceptionTree());
 
-            if (ex.InnerException != null)
-                message += string.Format("{0}{0}Inner exception message:{0}{1}",
-                    Environment.NewLine, ex.InnerException.GetFullErrorMessageTree());
+            return new ReadOnlyCollection<Exception>(exceptions);
+        }
 
+        public static IEnumerable<string> GetExceptionTreeMessages(this Exception target)
+        {
+            var messages = new List<string>();
+            messages.AddRange(target.GetExceptionTree().Select(c => c.Message));
+            return new ReadOnlyCollection<string>(messages);
+        }
+
+        public static string GetExceptionTreeAsOneMessage(this Exception target)
+        {
+            var message = String.Empty;
+            message += String.Join(Environment.NewLine + Environment.NewLine + "Inner exception message:" + Environment.NewLine, 
+                target.GetExceptionTreeMessages().ToArray());
             return message;
         }
     }

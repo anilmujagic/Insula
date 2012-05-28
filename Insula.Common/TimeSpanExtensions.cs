@@ -2,33 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace Insula.Common
 {
     public static class TimeSpanExtensions
     {
-        public static string ToLongString(this TimeSpan ts, bool alwaysShowMilliseconds = false)
+        public static string ToLongString(this TimeSpan target)
         {
-            var description = String.Format("{0}ms", ts.Milliseconds);
+            return ToLongString(target, false);
+        }
 
-            if (ts.TotalSeconds >= 1)
+        public static string ToLongString(this TimeSpan target, bool alwaysShowMilliseconds)
+        {
+            var description = target.Milliseconds.ToString(CultureInfo.InvariantCulture) + "ms";
+
+            if (target.TotalSeconds >= 1)
             {
                 if (alwaysShowMilliseconds)
                     description = ", " + description;
                 else
                     description = String.Empty;
 
-                description = String.Format("{0}s", ts.Seconds) + description;
+                description = target.Seconds.ToString(CultureInfo.InvariantCulture) + "s" + description;
             }
 
-            if (ts.TotalMinutes >= 1)
-                description = String.Format("{0}m, ", ts.Minutes) + description;
+            if (target.TotalMinutes >= 1)
+                description = target.Minutes.ToString(CultureInfo.InvariantCulture) + "m, " + description;
 
-            if (ts.TotalHours >= 1)
-                description = String.Format("{0}h, ", ts.Hours) + description;
+            if (target.TotalHours >= 1)
+                description = target.Hours.ToString(CultureInfo.InvariantCulture) + "h, " + description;
 
-            if (ts.TotalDays >= 1)
-                description = String.Format("{0}d, ", ts.Days) + description;
+            if (target.TotalDays >= 1)
+                description = target.Days.ToString(CultureInfo.InvariantCulture) + "d, " + description;
 
             return description;
         }
