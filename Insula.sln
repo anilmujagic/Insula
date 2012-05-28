@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Data", "Insula.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Common", "Insula.Common\Insula.Common.csproj", "{E925D45A-CEB6-4618-970E-4F3D41B32117}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.CodeGeneration", "Insula.CodeGeneration\Insula.CodeGeneration.csproj", "{2B156A9B-6B01-426C-9F09-7F614E91BC92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{E925D45A-CEB6-4618-970E-4F3D41B32117}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E925D45A-CEB6-4618-970E-4F3D41B32117}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E925D45A-CEB6-4618-970E-4F3D41B32117}.Release|x86.ActiveCfg = Release|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2B156A9B-6B01-426C-9F09-7F614E91BC92}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
