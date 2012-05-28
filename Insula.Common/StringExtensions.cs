@@ -9,14 +9,24 @@ namespace Insula.Common
     {
         public static bool IsNullOrEmpty(this string target)
         {
-            return String.IsNullOrEmpty(target);
+            return string.IsNullOrEmpty(target);
         }
 
         public static bool IsNullOrWhiteSpace(this string target)
         {
-            //return String.IsNullOrWhiteSpace(s);  //Not supported by Portable Library
-            return String.IsNullOrEmpty(target) || target.Trim().Length == 0;
+            //return string.IsNullOrWhiteSpace(s);  //Not supported by Portable Library
+            return string.IsNullOrEmpty(target) || target.Trim().Length == 0;
         }
+
+        //public static string Format(this string target, params object[] args)
+        //{
+        //    return string.Format(target, args);
+        //}
+
+        //public static string Format(this string target, IFormatProvider provider, params object[] args)
+        //{
+        //    return string.Format(provider, target, args);
+        //}
 
         public static bool ContainsAny(this string target, IEnumerable<string> values)
         {

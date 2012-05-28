@@ -31,8 +31,8 @@ namespace Insula.Common
 
         public static string GetExceptionTreeAsOneMessage(this Exception target)
         {
-            var message = String.Empty;
-            message += String.Join(Environment.NewLine + Environment.NewLine + "Inner exception message:" + Environment.NewLine, 
+            var message = string.Empty;
+            message += string.Join(Environment.NewLine + Environment.NewLine + "Inner exception message:" + Environment.NewLine, 
                 target.GetExceptionTreeMessages().ToArray());
             return message;
         }

@@ -22,7 +22,7 @@ namespace Insula.Common
                 if (alwaysShowMilliseconds)
                     description = ", " + description;
                 else
-                    description = String.Empty;
+                    description = string.Empty;
 
                 description = target.Seconds.ToString(CultureInfo.InvariantCulture) + "s" + description;
             }
