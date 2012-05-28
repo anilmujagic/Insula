@@ -27,7 +27,7 @@ namespace Insula.Data.Orm
             else
                 _tableAlias = tableAlias;
 
-            _columns = _tableMetadata.GetSelectColumns().ToList();
+            _columns = _tableMetadata.SelectColumns.ToList();
 
             var setters = new List<PropertyValueSetterDelegate>();
             foreach (var c in _columns)

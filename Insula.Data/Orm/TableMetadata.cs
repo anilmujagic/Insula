@@ -11,6 +11,12 @@ namespace Insula.Data.Orm
         public string Name { get; private set; }
         public Type Type { get; private set; }
 
+        public ColumnMetadata IdentityColumn { get; private set; }
+        public IEnumerable<ColumnMetadata> KeyColumns { get; private set; }
+        public IEnumerable<ColumnMetadata> InsertColumns { get; private set; }
+        public IEnumerable<ColumnMetadata> UpdateColumns { get; private set; }
+        public IEnumerable<ColumnMetadata> SelectColumns { get; private set; }
+
         private List<ColumnMetadata> _columns;
         public IEnumerable<ColumnMetadata> Columns
         {
@@ -35,41 +41,21 @@ namespace Insula.Data.Orm
             {
                 _columns.Add(new ColumnMetadata(p));
             }
-        }
 
-        //TODO: Make read-only property
-        public ColumnMetadata GetIdentityColumn()
-        {
-            return this.Columns
+            this.IdentityColumn = this.Columns
                 .SingleOrDefault(c => c.IsMapped && c.IsIdentity);
-        }
 
-        //TODO: Make field backed read-only property for performance reasons
-        public IEnumerable<ColumnMetadata> GetKeyColumns()
-        {
-            return this.Columns
+            this.KeyColumns = this.Columns
                 .Where(c => c.IsMapped && c.IsPrimaryKey);
-        }
 
-        //TODO: Make field backed read-only property for performance reasons
-        public IEnumerable<ColumnMetadata> GetInsertColumns()
-        {
-            return this.Columns
+            this.InsertColumns = this.Columns
                 .Where(c => c.IsMapped && !c.IsIdentity)
                 .OrderByDescending(c => c.IsPrimaryKey);
-        }
 
-        //TODO: Make field backed read-only property for performance reasons
-        public IEnumerable<ColumnMetadata> GetUpdateColumns()
-        {
-            return this.Columns
+            this.UpdateColumns = this.Columns
                 .Where(c => c.IsMapped && !c.IsPrimaryKey && !c.IsIdentity);
-        }
 
-        //TODO: Make field backed read-only property for performance reasons
-        public IEnumerable<ColumnMetadata> GetSelectColumns()
-        {
-            return this.Columns
+            this.SelectColumns = this.Columns
                 .Where(c => c.IsMapped)
                 .OrderByDescending(c => c.IsPrimaryKey);
         }

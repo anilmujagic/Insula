@@ -111,7 +111,7 @@ namespace Insula.Data.Orm
                         if (!fkEntities.ContainsKey(join.Value.Type))
                             fkEntities.Add(join.Value.Type, new Dictionary<string, object>());
 
-                        var keyValues = string.Join("|", join.Value.GetKeyColumns()
+                        var keyValues = string.Join("|", join.Value.KeyColumns
                             .Select(c => fkEntity.GetType().GetProperty(c.Name).GetValue(fkEntity, null).ToString()));
 
                         //Making sure no multiple instances of the same entity are created
@@ -191,7 +191,7 @@ namespace Insula.Data.Orm
             if (_joins.IsNullOrEmpty())
             {
                 if (_columnNames.IsNullOrWhiteSpace())
-                    _columnNames = string.Join(", ", _repository.TableMetadata.GetSelectColumns()
+                    _columnNames = string.Join(", ", _repository.TableMetadata.SelectColumns
                         .Select(c => string.Format("[{0}]", c.Name)).ToArray());
                 orderByColumns = _orderByColumns.IsNullOrEmpty() ? string.Empty : string.Join(", ", _orderByColumns);
             }
@@ -199,14 +199,14 @@ namespace Insula.Data.Orm
             {
                 if (_columnNames.IsNullOrWhiteSpace())
                 {
-                    _columnNames = string.Join(",\n", _repository.TableMetadata.GetSelectColumns()
+                    _columnNames = string.Join(",\n", _repository.TableMetadata.SelectColumns
                         .Select(c => string.Format("[{0}].[{1}] AS [{0}.{1}]", _repository.TableMetadata.Name, c.Name)).ToArray());
 
                     foreach (var j in _joins)
                     {
                         if (!_columnNames.IsNullOrWhiteSpace())
                             _columnNames += ",\n";
-                        _columnNames += string.Join(",\n", j.Value.GetSelectColumns()
+                        _columnNames += string.Join(",\n", j.Value.SelectColumns
                             .Select(c => string.Format("[{0}].[{1}] AS [{0}.{1}]", j.Key, c.Name)).ToArray());
                     }
                 }
@@ -217,7 +217,7 @@ namespace Insula.Data.Orm
                 foreach (var j in _joins)
                 {
                     var onClause = string.Empty;
-                    foreach (var c in j.Value.GetKeyColumns())
+                    foreach (var c in j.Value.KeyColumns)
                     {
                         if (!onClause.IsNullOrWhiteSpace())
                             onClause += " AND ";

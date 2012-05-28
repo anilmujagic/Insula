@@ -12,10 +12,6 @@ namespace Insula.Data.Orm
     {
         private readonly DatabaseContext _ctx;
         private readonly TableMetadata _tableMetadata;
-        private readonly ColumnMetadata _identityColumn;
-        private readonly List<ColumnMetadata> _keyColumns;
-        private readonly List<ColumnMetadata> _insertColumns;
-        private readonly List<ColumnMetadata> _updateColumns;
         private readonly string _insertSql;
         private readonly string _updateSql;
         private readonly string _deleteSql;
@@ -32,24 +28,19 @@ namespace Insula.Data.Orm
 
             _tableMetadata = new TableMetadata(typeof(T));
 
-            _identityColumn = _tableMetadata.GetIdentityColumn();
-            _keyColumns = _tableMetadata.GetKeyColumns().ToList();
-            _insertColumns = _tableMetadata.GetInsertColumns().ToList();
-            _updateColumns = _tableMetadata.GetUpdateColumns().ToList();
-
             _insertSql = string.Format("INSERT INTO [{0}] ({1}) VALUES ({2})",
                 _tableMetadata.Name,
-                string.Join(", ", _insertColumns.Select(c => string.Format("[{0}]", c.Name))),
-                string.Join(", ", _insertColumns.Select(c => string.Format("@{0}", c.Name))));
+                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format("[{0}]", c.Name))),
+                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format("@{0}", c.Name))));
 
-            if (_identityColumn != null)
+            if (_tableMetadata.IdentityColumn != null)
                 _insertSql += "; SELECT SCOPE_IDENTITY();";
 
-            string keyWhereClause = string.Join(" AND ", _keyColumns.Select(c => string.Format("[{0}] = @{0}", c.Name)));
+            string keyWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns.Select(c => string.Format("[{0}] = @{0}", c.Name)));
 
             _updateSql = string.Format("UPDATE [{0}] SET {1} WHERE {2}",
                 _tableMetadata.Name,
-                string.Join(", ", _updateColumns.Select(c => string.Format("[{0}] = @{0}", c.Name))),
+                string.Join(", ", _tableMetadata.UpdateColumns.Select(c => string.Format("[{0}] = @{0}", c.Name))),
                 keyWhereClause);
 
             _deleteSql = string.Format("DELETE FROM [{0}] WHERE {1}",
@@ -57,7 +48,7 @@ namespace Insula.Data.Orm
                 keyWhereClause);
 
             int index = 0;
-            _keyQueryWhereClause = string.Join(" AND ", _keyColumns.Select(c => string.Format("[{0}] = @{1}", c.Name, index++)));
+            _keyQueryWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns.Select(c => string.Format("[{0}] = @{1}", c.Name, index++)));
 
             _deleteByKeySql = string.Format("DELETE FROM [{0}] WHERE {1}",
                 _tableMetadata.Name,
@@ -69,7 +60,7 @@ namespace Insula.Data.Orm
         public void Insert(T entity)
         {
             var parameters = new List<SqlParameter>();
-            foreach (var c in _insertColumns)
+            foreach (var c in _tableMetadata.InsertColumns)
             {
                 var value = c.PropertyInfo.GetValue(entity, null);
                 parameters.Add(new SqlParameter("@" + c.Name, value ?? DBNull.Value));
@@ -97,25 +88,25 @@ namespace Insula.Data.Orm
                     _ctx.CloseConnection();
                 }
 
-                if (_identityColumn != null)
+                if (_tableMetadata.IdentityColumn != null)
                 {
-                    _identityColumn.PropertyInfo.SetValue(entity, Convert.ToInt32(newID), null);
+                    _tableMetadata.IdentityColumn.PropertyInfo.SetValue(entity, Convert.ToInt32(newID), null);
                 }
             }
         }
 
         public void Update(T entity)
         {
-            if (_keyColumns.IsNullOrEmpty())
+            if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for UPDATE statement to be valid.");
 
             var parameters = new List<SqlParameter>();
-            foreach (var c in _updateColumns)
+            foreach (var c in _tableMetadata.UpdateColumns)
             {
                 var value = c.PropertyInfo.GetValue(entity, null);
                 parameters.Add(new SqlParameter("@" + c.Name, value ?? DBNull.Value));
             }
-            foreach (var c in _keyColumns)
+            foreach (var c in _tableMetadata.KeyColumns)
             {
                 var value = c.PropertyInfo.GetValue(entity, null);
                 parameters.Add(new SqlParameter("@" + c.Name, value ?? DBNull.Value));
@@ -145,11 +136,11 @@ namespace Insula.Data.Orm
 
         public void Delete(T entity)
         {
-            if (_keyColumns.IsNullOrEmpty())
+            if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for DELETE statement to be valid.");
 
             var parameters = new List<SqlParameter>();
-            foreach (var c in _keyColumns)
+            foreach (var c in _tableMetadata.KeyColumns)
             {
                 var value = c.PropertyInfo.GetValue(entity, null);
                 parameters.Add(new SqlParameter("@" + c.Name, value ?? DBNull.Value));
@@ -179,11 +170,11 @@ namespace Insula.Data.Orm
 
         public void DeleteByKey(params object[] keyValues)
         {
-            if (_keyColumns.IsNullOrEmpty())
+            if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for DELETE statement to be valid.");
             if (keyValues == null)
                 throw new ArgumentNullException("keyValues");
-            if (keyValues.Length != _keyColumns.Count)
+            if (keyValues.Length != _tableMetadata.KeyColumns.Count())
                 throw new ArgumentOutOfRangeException("keyValues", keyValues.Length, "Number of passed key values must be equal to number of key columns.");
 
             var parameters = new List<SqlParameter>();
@@ -218,11 +209,11 @@ namespace Insula.Data.Orm
 
         public T GetByKey(params object[] keyValues)
         {
-            if (_keyColumns.IsNullOrEmpty())
+            if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for GetByKey to be valid.");
             if (keyValues == null)
                 throw new ArgumentNullException("keyValues");
-            if (keyValues.Length != _keyColumns.Count)
+            if (keyValues.Length != _tableMetadata.KeyColumns.Count())
                 throw new ArgumentOutOfRangeException("keyValues", keyValues.Length, "Number of passed key values must be equal to number of key columns.");
 
             return this.Query()
