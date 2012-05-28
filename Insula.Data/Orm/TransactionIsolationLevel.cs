@@ -37,7 +37,7 @@ namespace Insula.Data.Orm
                 case TransactionIsolationLevel.Unspecified:
                     return System.Transactions.IsolationLevel.Unspecified;
                 default:
-                    throw new Exception("Invalid transaction isolation level.");
+                    throw new ArgumentOutOfRangeException("transactionIsolationLevel", "Invalid transaction isolation level.");
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using Insula.Common;
+using System.Globalization;
 
 namespace Insula.Data.Orm
 {
@@ -35,7 +36,7 @@ namespace Insula.Data.Orm
             var property = typeof(T).GetProperty(propertyName);
             if (property == null)
                 throw new ArgumentException(
-                    string.Format("Type {0} doesn't have a property named {1}", typeof(T).Name, propertyName),
+                    string.Format(CultureInfo.InvariantCulture, "Type {0} doesn't have a property named {1}", typeof(T).Name, propertyName),
                     "propertyName");
 
             var tableMetadata = new TableMetadata(property.PropertyType);
@@ -48,12 +49,12 @@ namespace Insula.Data.Orm
             return this;
         }
 
-        public SqlQuery<T> Where(string where, params object[] parameters)
+        public SqlQuery<T> Where(string whereClause, params object[] parameters)
         {
             if (!_where.IsNullOrWhiteSpace())
                 throw new InvalidOperationException("WHERE clause is already set.");
 
-            _where = where;
+            _where = whereClause;
             _parameters = parameters;
             return this;
         }
@@ -192,27 +193,35 @@ namespace Insula.Data.Orm
             {
                 if (_columnNames.IsNullOrWhiteSpace())
                     _columnNames = string.Join(", ", _repository.TableMetadata.SelectColumns
-                        .Select(c => string.Format("[{0}]", c.Name)).ToArray());
-                orderByColumns = _orderByColumns.IsNullOrEmpty() ? string.Empty : string.Join(", ", _orderByColumns);
+                        .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}]", c.Name))
+                        .ToArray());
+
+                orderByColumns = _orderByColumns.IsNullOrEmpty() 
+                    ? string.Empty 
+                    : string.Join(", ", _orderByColumns);
             }
             else
             {
                 if (_columnNames.IsNullOrWhiteSpace())
                 {
                     _columnNames = string.Join(",\n", _repository.TableMetadata.SelectColumns
-                        .Select(c => string.Format("[{0}].[{1}] AS [{0}.{1}]", _repository.TableMetadata.Name, c.Name)).ToArray());
+                        .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}].[{1}] AS [{0}.{1}]", _repository.TableMetadata.Name, c.Name))
+                        .ToArray());
 
                     foreach (var j in _joins)
                     {
                         if (!_columnNames.IsNullOrWhiteSpace())
                             _columnNames += ",\n";
+
                         _columnNames += string.Join(",\n", j.Value.SelectColumns
-                            .Select(c => string.Format("[{0}].[{1}] AS [{0}.{1}]", j.Key, c.Name)).ToArray());
+                            .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}].[{1}] AS [{0}.{1}]", j.Key, c.Name))
+                            .ToArray());
                     }
                 }
 
-                orderByColumns = _orderByColumns.IsNullOrEmpty() ? string.Empty : string.Join(", ", _orderByColumns
-                    .Select(c => string.Format("[{0}].{1}", _repository.TableMetadata.Name, c.Trim())));
+                orderByColumns = _orderByColumns.IsNullOrEmpty()
+                    ? string.Empty
+                    : string.Join(", ", _orderByColumns.Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}].{1}", _repository.TableMetadata.Name, c.Trim())));
 
                 foreach (var j in _joins)
                 {
@@ -223,11 +232,11 @@ namespace Insula.Data.Orm
                             onClause += " AND ";
 
                         //This assumes convention where FK column names are the same as PK column names.
-                        //TODO: Implement ForeignKeyAttribute and use its column names to make the "ON" clause for more complex mapping cases.
-                        onClause += string.Format("([{0}].[{2}] = [{1}].[{2}])", _repository.TableMetadata.Name, j.Key, c.Name);
+                        //TODO: Implement ForeignKeyAttribute and use its column names to make the "ON" clause for more complex scenarios.
+                        onClause += string.Format(CultureInfo.InvariantCulture, "([{0}].[{2}] = [{1}].[{2}])", _repository.TableMetadata.Name, j.Key, c.Name);
                     }
 
-                    joins.AppendLine(string.Format("LEFT OUTER JOIN [{0}] AS [{1}] ON {2}", j.Value.Name, j.Key, onClause));
+                    joins.AppendLine(string.Format(CultureInfo.InvariantCulture, "LEFT OUTER JOIN [{0}] AS [{1}] ON {2}", j.Value.Name, j.Key, onClause));
                 }
             }
 
@@ -241,7 +250,7 @@ namespace Insula.Data.Orm
                     sb.AppendFormat("TOP {0}\n", _take);
 
                 sb.AppendLine(_columnNames);
-                sb.AppendLine(string.Format("FROM [{0}]", _repository.TableMetadata.Name));
+                sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "FROM [{0}]", _repository.TableMetadata.Name));
 
                 sb.Append(joins.ToString());
 
@@ -253,7 +262,8 @@ namespace Insula.Data.Orm
             }
             else
             {
-                sb.AppendFormat("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY {0}) [RowNumber], {1} FROM [{2}]{3}{4}) AS [T] WHERE [RowNumber] > {5}",
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY {0}) [RowNumber], {1} FROM [{2}]{3}{4}) AS [T] WHERE [RowNumber] > {5}",
                     orderByColumns.IsNullOrWhiteSpace() ? "(SELECT NULL)" : orderByColumns,
                     _columnNames,
                     _repository.TableMetadata.Name,

@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Reflection;
 using Insula.Common;
+using System.Globalization;
 
 namespace Insula.Data.Orm
 {
@@ -28,29 +29,35 @@ namespace Insula.Data.Orm
 
             _tableMetadata = new TableMetadata(typeof(T));
 
-            _insertSql = string.Format("INSERT INTO [{0}] ({1}) VALUES ({2})",
+            _insertSql = string.Format(CultureInfo.InvariantCulture, 
+                "INSERT INTO [{0}] ({1}) VALUES ({2})",
                 _tableMetadata.Name,
-                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format("[{0}]", c.Name))),
-                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format("@{0}", c.Name))));
+                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}]", c.Name))),
+                string.Join(", ", _tableMetadata.InsertColumns.Select(c => string.Format(CultureInfo.InvariantCulture, "@{0}", c.Name))));
 
             if (_tableMetadata.IdentityColumn != null)
                 _insertSql += "; SELECT SCOPE_IDENTITY();";
 
-            string keyWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns.Select(c => string.Format("[{0}] = @{0}", c.Name)));
+            string keyWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns
+                .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{0}", c.Name)));
 
-            _updateSql = string.Format("UPDATE [{0}] SET {1} WHERE {2}",
+            _updateSql = string.Format(CultureInfo.InvariantCulture, 
+                "UPDATE [{0}] SET {1} WHERE {2}",
                 _tableMetadata.Name,
-                string.Join(", ", _tableMetadata.UpdateColumns.Select(c => string.Format("[{0}] = @{0}", c.Name))),
+                string.Join(", ", _tableMetadata.UpdateColumns.Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{0}", c.Name))),
                 keyWhereClause);
 
-            _deleteSql = string.Format("DELETE FROM [{0}] WHERE {1}",
+            _deleteSql = string.Format(CultureInfo.InvariantCulture, 
+                "DELETE FROM [{0}] WHERE {1}",
                 _tableMetadata.Name,
                 keyWhereClause);
 
             int index = 0;
-            _keyQueryWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns.Select(c => string.Format("[{0}] = @{1}", c.Name, index++)));
+            _keyQueryWhereClause = string.Join(" AND ", _tableMetadata.KeyColumns
+                .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{1}", c.Name, index++)));
 
-            _deleteByKeySql = string.Format("DELETE FROM [{0}] WHERE {1}",
+            _deleteByKeySql = string.Format(CultureInfo.InvariantCulture, 
+                "DELETE FROM [{0}] WHERE {1}",
                 _tableMetadata.Name,
                 _keyQueryWhereClause);
 
@@ -90,7 +97,7 @@ namespace Insula.Data.Orm
 
                 if (_tableMetadata.IdentityColumn != null)
                 {
-                    _tableMetadata.IdentityColumn.PropertyInfo.SetValue(entity, Convert.ToInt32(newID), null);
+                    _tableMetadata.IdentityColumn.PropertyInfo.SetValue(entity, Convert.ToInt32(newID, CultureInfo.InvariantCulture), null);
                 }
             }
         }
@@ -181,7 +188,7 @@ namespace Insula.Data.Orm
             int index = 0;
             foreach (var value in keyValues)
             {
-                parameters.Add(new SqlParameter("@" + index.ToString(), value ?? DBNull.Value));
+                parameters.Add(new SqlParameter("@" + index.ToString(CultureInfo.InvariantCulture), value ?? DBNull.Value));
                 index++;
             }
 
@@ -210,7 +217,7 @@ namespace Insula.Data.Orm
         public T GetByKey(params object[] keyValues)
         {
             if (_tableMetadata.KeyColumns.IsNullOrEmpty())
-                throw new SqlStatementException("At least one object property must have a [Key] attribute for GetByKey to be valid.");
+                throw new SqlStatementException("At least one object property must have a [Key] attribute for SELECT statement by primary key to be valid.");
             if (keyValues == null)
                 throw new ArgumentNullException("keyValues");
             if (keyValues.Length != _tableMetadata.KeyColumns.Count())
