@@ -10,30 +10,30 @@ namespace Insula.Common
     {
         public static IEnumerable<Exception> GetExceptionTree(this Exception target)
         {
-            if (target == null)
-                return Enumerable.Empty<Exception>();
-
             var exceptions = new List<Exception>();
-            exceptions.Add(target);
 
-            if (target.InnerException != null)
-                exceptions.AddRange(target.InnerException.GetExceptionTree());
+            var currentException = target;
+            while (currentException != null)
+            {
+                exceptions.Add(currentException);
+                currentException = currentException.InnerException;
+            }
 
-            return new ReadOnlyCollection<Exception>(exceptions);
+            return exceptions;
         }
 
         public static IEnumerable<string> GetExceptionTreeMessages(this Exception target)
         {
             var messages = new List<string>();
             messages.AddRange(target.GetExceptionTree().Select(c => c.Message));
-            return new ReadOnlyCollection<string>(messages);
+            return messages;
         }
 
-        public static string GetExceptionTreeAsOneMessage(this Exception target)
+        public static string GetExceptionTreeAsSingleMessage(this Exception target)
         {
             var message = string.Empty;
-            message += string.Join(Environment.NewLine + Environment.NewLine + "Inner exception message:" + Environment.NewLine, 
-                target.GetExceptionTreeMessages().ToArray());
+            var separator = string.Format("{0}{0}Inner exception message:{0}", Environment.NewLine);
+            message += string.Join(separator, target.GetExceptionTreeMessages().ToArray());
             return message;
         }
     }
