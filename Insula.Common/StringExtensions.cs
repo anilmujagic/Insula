@@ -59,7 +59,7 @@ namespace Insula.Common
         }
 
         /// <summary>
-        /// First trims the string, and then replaces all ocurences of multiple space characters with single space character.
+        /// Trims the string and replaces occurrences of multiple space characters with single space character.
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
