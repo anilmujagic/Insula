@@ -18,7 +18,7 @@ namespace Insula.Common
             return string.IsNullOrEmpty(target) || target.Trim().Length == 0;
         }
 
-        #region TODO: Not sure if it would me a good idea to have these methods.
+        #region TODO: Not sure if it would be a good idea to have these methods.
         //public static string Format(this string target, params object[] args)
         //{
         //    return string.Format(target, args);
@@ -58,6 +58,11 @@ namespace Insula.Common
             return true;
         }
 
+        /// <summary>
+        /// First trims the string, and then replaces all ocurences of multiple space characters with single space character.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static string CleanSpaces(this string target)
         {
             if (target.IsNullOrEmpty())
