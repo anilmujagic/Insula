@@ -9,7 +9,7 @@ namespace Insula.CodeGeneration
     public class EntityMember
     {
         public string Name { get; set; }
-        public SystemDataTypeInfo DataType { get; set; }
+        public DataTypeInfo DataType { get; set; }
         public int? MaxLength { get; set; }
         public int? DecimalPlaces { get; set; }
         public bool IsNullable { get; set; }

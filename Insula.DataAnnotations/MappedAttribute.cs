@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Insula.Data.Orm
+namespace Insula.DataAnnotations
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class MappedAttribute : Attribute

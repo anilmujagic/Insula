@@ -1,0 +1,98 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ include file="CodeGeneration.ttinclude" #>
+using System;
+using System.ComponentModel.DataAnnotations;
+using Insula.DataAnnotations;
+
+namespace <#= codeNamespace #>
+{
+<#
+foreach (var t in entities) 
+{ 
+#>
+    public partial class <#= t.Name #>
+    {
+<#  foreach (var c in t.Members.OrderByDescending(c => c.IsPrimaryKey).ThenBy(c => c.OrdinalPosition)) { #>
+        [Mapped]
+<#      if (c.IsPrimaryKey) { #>
+        [Key]                
+<#      } #>
+<#      if (c.IsIdentity) { #>
+        [Identity]
+<#      } #>
+<#      if (c.IsComputed) { #>
+        [Calculated]
+<#      } #>
+<#      if (!c.IsNullable) { #>
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(ModelValidationMessages))]
+<#      } #>
+<#      if (c.MaxLength.HasValue && c.MaxLength > 0) { #>
+        //[StringLength(<#= c.MaxLength #>, ErrorMessageResourceName = "StringLength", ErrorMessageResourceType = typeof(ModelValidationMessages))]
+<#      } #>
+        //[Display(Name = "<#= t.Name #>_<#= c.Name #>_LABEL", Description = "<#= t.Name #>_<#= c.Name #>_DESCRIPTION", ResourceType = typeof(ModelDisplayNamesAndDescriptions))]
+<#          
+        var displayFormatAttribute = string.Empty;
+
+        if (c.IsNullable || c.DataType.Alias == "decimal" || c.DataType.Alias == "DateTime" || c.DataType.Alias == "TimeSpan")
+        {
+            if (c.IsNullable)
+            {
+                displayFormatAttribute += "ConvertEmptyStringToNull = true";
+            }
+        
+            if (c.DataType.Alias == "decimal" && c.DecimalPlaces.HasValue) 
+            {
+                if (!string.IsNullOrWhiteSpace(displayFormatAttribute))
+                {
+                    displayFormatAttribute += ", ";
+                }
+
+                //TODO: Fine tune rules for decimals to avoid custom format strings on UI elements
+                displayFormatAttribute += string.Format("DataFormatString = \"N{0}\"", c.DecimalPlaces <= 6 ? c.DecimalPlaces : 2);
+            }
+
+            if (c.DataType.Alias == "DateTime" || c.DataType.Alias == "TimeSpan")
+            {
+                if (!string.IsNullOrWhiteSpace(displayFormatAttribute))
+                {
+                    displayFormatAttribute += ", ";
+                }
+
+                switch (c.DataType.SqlDataTypeName)
+                {
+                    case "DATE":
+                        displayFormatAttribute += "DataFormatString = \"d\"";
+                        break;
+                    case "SMALLDATETIME":
+                        displayFormatAttribute += "DataFormatString = \"g\"";
+                        break;
+                    case "DATETIME":
+                    case "DATETIME2":
+                        displayFormatAttribute += "DataFormatString = \"G\"";
+                        break;
+                    case "TIME":
+                        displayFormatAttribute += "DataFormatString = \"T\"";
+                        break;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(displayFormatAttribute))
+            {
+#>
+        [DisplayFormat(<#= displayFormatAttribute #>)]
+<#          } #>
+<#      } #>
+<#      foreach (var a in c.Attributes) {#>
+        [<#= a #>]
+<#      } #>
+        public <#= c.DataType.Alias #> <#= c.Name #> { get; set; }
+
+<#  } #>
+    }
+
+
+<#
+} 
+#>
+}

@@ -1,0 +1,27 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="D:\\PROJECTS\\Insula\\Insula.Common\\Bin\\Release\\Insula.Common.dll" #>
+<#@ assembly name="D:\\PROJECTS\\Insula\\Insula.CodeGeneration\\Bin\\Release\\Insula.CodeGeneration.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="Insula.Common" #>
+<#@ import namespace="Insula.CodeGeneration" #>
+<#    
+    ////////////////////////////////////////
+    //  Variables used in code templates  //
+    ////////////////////////////////////////
+    var codeNamespace = "MyApp.Data";
+    var databaseContextName = "MyAppDatabaseContext";
+    var connectionStringName = "MyAppDB";
+    var generateStronglyTyped_GetByKey_And_DeleteByKey_RepositoryMethods = true;
+    
+    ////////////////////////////////////////////////////////////////////
+    //  Load entities from database and customize the list if needed  //
+    ////////////////////////////////////////////////////////////////////
+    var entities = EntityLoader.LoadFromDatabase("Data Source=.\\SQLEXPRESS;Initial Catalog=ITBookRatingsDB;Integrated Security=SSPI");
+    entities.RemoveAll(e => e.Name.StartsWith("aspnet_"));  //Remove ASP.NET Membership/Role Provider schema tables
+    //entities["Book"].Members.RemoveAll(m => m.Name == "ISBN10");  //Remove particular field
+#>
+/////////////////////////////////////////////////////////////////////////////////////////////
+//  This code was generated from a template. Do NOT change it, edit the template instead.  //
+/////////////////////////////////////////////////////////////////////////////////////////////

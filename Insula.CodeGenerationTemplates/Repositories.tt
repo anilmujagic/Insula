@@ -1,0 +1,54 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ include file="CodeGeneration.ttinclude" #>
+using System;
+using Insula.Data.Orm;
+
+namespace <#= codeNamespace #>
+{
+<#
+foreach (var t in entities) 
+{ 
+    var parameters = string.Join(", ", 
+        t.Members
+            .Where(c => c.IsPrimaryKey)
+            .OrderBy(c => c.OrdinalPosition)
+            .Select(c => c.DataType.Alias + " " + c.Name.ToCamelCase(2)));
+
+    var keys = t.Members
+        .Where(c => c.IsPrimaryKey)
+        .OrderBy(c => c.OrdinalPosition)
+        .Select(c => c.Name);
+
+    var where = string.Join(" AND ", keys.Select(k => string.Format("[{0}] = @{1}", k, keys.ToList().IndexOf(k))));
+#>
+    public partial class <#= t.Name #>Repository : Repository<<#= t.Name #>>
+    {
+        public <#= t.Name #>Repository(<#= databaseContextName #> context)
+            : base(context)
+        {
+        }
+<#
+    if (generateStronglyTyped_GetByKey_And_DeleteByKey_RepositoryMethods)
+    {
+#>
+        
+        public <#= t.Name #> GetByKey(<#= parameters #>)
+        {
+            return this.Query().Where("<#= where #>", <#= string.Join(", ", keys.Select(k => k.ToCamelCase(2))) #>).GetSingle();  
+        }
+        
+        public void DeleteByKey(<#= parameters #>)
+        {
+            this.Delete(new <#= t.Name #>() { <#= string.Join(", ", keys.Select(k => k + " = " + k.ToCamelCase(2))) #> });
+        }
+<#
+    } 
+#>
+    }
+
+
+<#
+} 
+#>
+}

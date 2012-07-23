@@ -1,0 +1,42 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ include file="CodeGeneration.ttinclude" #>
+using System;
+using Insula.Data.Orm;
+
+namespace <#= codeNamespace #>
+{
+    public partial class <#= databaseContextName #> : DatabaseContext
+    {
+        public <#= databaseContextName #>()
+            : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString)
+        {
+        }
+
+        public <#= databaseContextName #>(bool keepConnectionOpen)
+            : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString, keepConnectionOpen)
+        {
+        }
+
+        #region Repositories
+
+<#  foreach (var t in entities)	
+    {
+        var fieldName = "_" + t.Name.ToCamelCase(2) + "Repository";
+    #>
+        private <#= t.Name #>Repository <#= fieldName #>;
+        public <#= t.Name #>Repository <#= t.Name #>Repository
+        {
+            get
+            {
+                if (<#= fieldName #> == null)
+                    <#= fieldName #> = new <#= t.Name #>Repository(this);
+    
+                return <#= fieldName #>;
+            }
+        }
+
+<#	} #>
+        #endregion
+    }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Insula.Common
 {
@@ -32,7 +33,7 @@ namespace Insula.Common
         public static string GetExceptionTreeAsSingleMessage(this Exception target)
         {
             var message = string.Empty;
-            var separator = string.Format("{0}{0}Inner exception message:{0}", Environment.NewLine);
+            var separator = string.Format(CultureInfo.InvariantCulture, "{0}{0}Inner exception message:{0}", Environment.NewLine);
             message += string.Join(separator, target.GetExceptionTreeMessages().ToArray());
             return message;
         }

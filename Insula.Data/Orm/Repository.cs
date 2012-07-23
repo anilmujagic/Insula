@@ -66,6 +66,9 @@ namespace Insula.Data.Orm
 
         public void Insert(T entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException("entity");
+
             var parameters = new List<SqlParameter>();
             foreach (var c in _tableMetadata.InsertColumns)
             {
@@ -104,6 +107,9 @@ namespace Insula.Data.Orm
 
         public void Update(T entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException("entity");
+
             if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for UPDATE statement to be valid.");
 
@@ -143,6 +149,9 @@ namespace Insula.Data.Orm
 
         public void Delete(T entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException("entity");
+
             if (_tableMetadata.KeyColumns.IsNullOrEmpty())
                 throw new SqlStatementException("At least one object property must have a [Key] attribute for DELETE statement to be valid.");
 

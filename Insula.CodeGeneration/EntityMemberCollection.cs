@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace Insula.CodeGeneration
 {
-    public class EntityMemberCollection : Collection<EntityMember>
+    public class EntityMemberCollection : List<EntityMember>
     {
         public EntityMemberCollection()
         {
