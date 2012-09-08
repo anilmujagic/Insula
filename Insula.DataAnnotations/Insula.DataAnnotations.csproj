@@ -43,8 +43,8 @@
     <None Include="Insula.DataAnnotations.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentityAttribute.cs" />
-    <Compile Include="MappedAttribute.cs" />
+    <Compile Include="Schema\IdentityAttribute.cs" />
+    <Compile Include="Schema\MappedAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

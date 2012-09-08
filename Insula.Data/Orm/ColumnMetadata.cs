@@ -29,10 +29,10 @@ namespace Insula.Data.Orm
             attributes = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true);
             this.IsPrimaryKey = !attributes.IsNullOrEmpty();
 
-            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.IdentityAttribute), true);
+            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.Schema.IdentityAttribute), true);
             this.IsIdentity = !attributes.IsNullOrEmpty();
 
-            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.MappedAttribute), true);
+            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.Schema.MappedAttribute), true);
             this.IsMapped = !attributes.IsNullOrEmpty();
         }
     }

@@ -4,7 +4,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using Insula.DataAnnotations;
+using Insula.DataAnnotations.Schema;
 
 namespace MyApp.Data
 {
