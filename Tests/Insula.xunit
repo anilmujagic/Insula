@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xunit>
+  <assemblies>
+    <assembly filename="D:\PROJECTS\Insula\Insula.Common.Tests\bin\Release\Insula.Common.Tests.dll" shadow-copy="true" />
+    <assembly filename="Insula.Common.Tests\bin\Release\Insula.Common.Tests.dll" shadow-copy="true" />
+    <assembly filename="Insula.Data.Orm.Tests\bin\Release\Insula.Data.Orm.Tests.dll" shadow-copy="true" />
+  </assemblies>
+</xunit>
