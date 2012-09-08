@@ -59,6 +59,46 @@ namespace Insula.Data.Orm
             return this;
         }
 
+        /// <summary>
+        /// Creates a SQL WHERE clause by extracting names and values from properties of passed object.
+        /// </summary>
+        /// <param name="columnValueFilters">Anonymous or typed object. Example: <c>Where(new { ItemCategoryID = "FOOD", IsAvailable = true })</c></param>
+        public SqlQuery<T> Where(object columnValueFilters, bool includePropertiesHavingDefaultTypeValue = false)
+        {
+            if (columnValueFilters == null)
+                throw new ArgumentNullException("columnValueFilters");
+
+            if (!_where.IsNullOrWhiteSpace())
+                throw new InvalidOperationException("WHERE clause is already set.");
+
+            var columns = new Dictionary<string, object>();
+
+            var properties = columnValueFilters.GetType().GetProperties();
+
+            if (properties.Length > 0)
+            {
+                foreach (var p in properties)
+                {
+                    var type = p.PropertyType;
+                    var defaultValue = type.IsValueType ? Activator.CreateInstance(type) : null;
+                    var value = p.GetValue(columnValueFilters, null);
+                    if (!(value.Equals(defaultValue) && !includePropertiesHavingDefaultTypeValue))
+                    {
+                        columns.Add(p.Name, value);
+                    }
+                }
+
+                _where = string.Join(" AND ", columns
+                    .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{0}", c.Key)));
+
+                _parameters = columns
+                    .Select(c => c.Value)
+                    .ToArray();
+            }
+
+            return this;
+        }
+
         public SqlQuery<T> OrderBy(params string[] columns)
         {
             if (!_orderByColumns.IsNullOrEmpty())
@@ -196,8 +236,8 @@ namespace Insula.Data.Orm
                         .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}]", c.Name))
                         .ToArray());
 
-                orderByColumns = _orderByColumns.IsNullOrEmpty() 
-                    ? string.Empty 
+                orderByColumns = _orderByColumns.IsNullOrEmpty()
+                    ? string.Empty
                     : string.Join(", ", _orderByColumns);
             }
             else

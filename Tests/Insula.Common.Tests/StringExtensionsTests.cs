@@ -9,10 +9,13 @@ namespace Insula.Common.Tests
 {
     public class StringExtensionsTests
     {
-        [Fact]
-        public void CleanSpacesTest()
+        public class CleanSpacesMethod
         {
-            Assert.Equal<string>("My dirty string", " My dirty  string  ".CleanSpaces());
+            [Fact]
+            public void TrimsSpacesAndReplacesMultipleSpacesWithSingle()
+            {
+                Assert.Equal<string>("My dirty string", " My dirty  string  ".CleanSpaces());
+            }
         }
     }
 }
