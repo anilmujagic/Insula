@@ -18,17 +18,15 @@ namespace Insula.Common
             return string.IsNullOrEmpty(target) || target.Trim().Length == 0;
         }
 
-        #region TODO: Not sure if it would be a good idea to have these methods.
         //public static string Format(this string target, params object[] args)
         //{
         //    return string.Format(target, args);
         //}
 
-        //public static string Format(this string target, IFormatProvider provider, params object[] args)
-        //{
-        //    return string.Format(provider, target, args);
-        //}        
-        #endregion
+        public static string Format(this string target, IFormatProvider provider, params object[] args)
+        {
+            return string.Format(provider, target, args);
+        }        
 
         public static bool ContainsAny(this string target, IEnumerable<string> values)
         {
