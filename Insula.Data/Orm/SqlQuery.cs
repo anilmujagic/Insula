@@ -303,7 +303,7 @@ namespace Insula.Data.Orm
             else
             {
                 sb.AppendFormat(CultureInfo.InvariantCulture,
-                    "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY {0}) [RowNumber], {1} FROM [{2}]{3}{4}) AS [T] WHERE [RowNumber] > {5}",
+                    "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY {0}) AS [RowNumber], {1} FROM [{2}]{3}{4}) AS [T] WHERE [RowNumber] > {5}",
                     orderByColumns.IsNullOrWhiteSpace() ? "(SELECT NULL)" : orderByColumns,
                     _columnNames,
                     _repository.TableMetadata.Name,
