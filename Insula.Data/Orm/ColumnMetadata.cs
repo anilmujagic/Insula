@@ -23,17 +23,10 @@ namespace Insula.Data.Orm
             this.Name = propertyInfo.Name;
             this.Type = propertyInfo.PropertyType;
 
-            var attributes = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.RequiredAttribute), true);
-            this.IsNullable = attributes.IsNullOrEmpty();
-
-            attributes = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true);
-            this.IsPrimaryKey = !attributes.IsNullOrEmpty();
-
-            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.Schema.IdentityAttribute), true);
-            this.IsIdentity = !attributes.IsNullOrEmpty();
-
-            attributes = propertyInfo.GetCustomAttributes(typeof(Insula.DataAnnotations.Schema.MappedAttribute), true);
-            this.IsMapped = !attributes.IsNullOrEmpty();
+            this.IsNullable = !Attribute.IsDefined(propertyInfo, typeof(System.ComponentModel.DataAnnotations.RequiredAttribute), true);
+            this.IsPrimaryKey = Attribute.IsDefined(propertyInfo, typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true);
+            this.IsIdentity = Attribute.IsDefined(propertyInfo, typeof(Insula.DataAnnotations.Schema.IdentityAttribute), true);
+            this.IsMapped = Attribute.IsDefined(propertyInfo, typeof(Insula.DataAnnotations.Schema.MappedAttribute), true);
         }
     }
 }
