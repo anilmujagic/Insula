@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace Insula.Common
 {
@@ -26,7 +27,12 @@ namespace Insula.Common
         public static string Format(this string target, IFormatProvider provider, params object[] args)
         {
             return string.Format(provider, target, args);
-        }        
+        }
+
+        public static string FormatInvariant(this string target, params object[] args)
+        {
+            return string.Format(CultureInfo.InvariantCulture, target, args);
+        }
 
         public static bool ContainsAny(this string target, IEnumerable<string> values)
         {
