@@ -25,10 +25,10 @@ foreach (var t in entities)
         [Calculated]
 <#      } #>
 <#      if (!c.IsNullable) { #>
-        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(ModelValidationMessages))]
+        [Required/*(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(ModelValidationMessages))*/]
 <#      } #>
 <#      if (c.MaxLength.HasValue && c.MaxLength > 0) { #>
-        //[StringLength(<#= c.MaxLength #>, ErrorMessageResourceName = "StringLength", ErrorMessageResourceType = typeof(ModelValidationMessages))]
+        [StringLength(<#= c.MaxLength #>/*, ErrorMessageResourceName = "StringLength", ErrorMessageResourceType = typeof(ModelValidationMessages)*/)]
 <#      } #>
         //[Display(Name = "<#= t.Name #>_<#= c.Name #>_LABEL", Description = "<#= t.Name #>_<#= c.Name #>_DESCRIPTION", ResourceType = typeof(ModelDisplayNamesAndDescriptions))]
 <#          
