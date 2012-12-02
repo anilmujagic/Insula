@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Data", "Insula.Data\Insula.Data.csproj", "{F8A372B0-61A6-4A19-8C25-D48B8129559C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Common", "Insula.Common\Insula.Common.csproj", "{E925D45A-CEB6-4618-970E-4F3D41B32117}"
@@ -16,6 +16,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Common.Tests", "Tests\Insula.Common.Tests\Insula.Common.Tests.csproj", "{2C34AE59-A2B8-4ABD-9CAC-68933531D3FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insula.Data.Orm.Tests", "Tests\Insula.Data.Orm.Tests\Insula.Data.Orm.Tests.csproj", "{4B1FB7ED-3938-4EA5-93CF-7428E06E969F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D6F045D9-49FA-46C3-BEDA-44047B7BE129}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
