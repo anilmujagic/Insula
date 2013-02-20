@@ -273,7 +273,7 @@ namespace Insula.Data.Orm
 
                         //This assumes convention where FK column names are the same as PK column names.
                         //TODO: Implement ForeignKeyAttribute and use its column names to make the "ON" clause for more complex scenarios.
-                        onClause += string.Format(CultureInfo.InvariantCulture, "([{0}].[{2}] = [{1}].[{2}])", _repository.TableMetadata.Name, j.Key, c.Name);
+                        onClause += string.Format(CultureInfo.InvariantCulture, "([{0}].[{2}] = [{1}].[{2}])", j.Key, _repository.TableMetadata.Name, c.Name);
                     }
 
                     joins.AppendLine(string.Format(CultureInfo.InvariantCulture, "LEFT OUTER JOIN [{0}] AS [{1}] ON {2}", j.Value.Name, j.Key, onClause));
