@@ -110,7 +110,7 @@ namespace Insula.Data.Orm
 
         public IEnumerable<T> GetAll()
         {
-            using (var command = _repository.DatabaseContext.CreateCommand(this.ToString(), _parameters))
+            using (var command = _repository.DatabaseContext.CreateCommand(this.ParseQuery(), _parameters))
             {
                 var entities = new List<T>();
                 var fkEntities = new Dictionary<Type, Dictionary<string, object>>();
@@ -212,7 +212,7 @@ namespace Insula.Data.Orm
         {
             _columnNames = "COUNT(*)";
 
-            var count = (int?)_repository.DatabaseContext.ExecuteScalar(this.ToString(), _parameters);
+            var count = (int?)_repository.DatabaseContext.ExecuteScalar(this.ParseQuery(), _parameters);
             return count ?? 0;
         }
 
@@ -220,11 +220,11 @@ namespace Insula.Data.Orm
         {
             _columnNames = "COUNT_BIG(*)";
 
-            var count = (long?)_repository.DatabaseContext.ExecuteScalar(this.ToString(), _parameters);
+            var count = (long?)_repository.DatabaseContext.ExecuteScalar(this.ParseQuery(), _parameters);
             return count ?? 0;
         }
 
-        public override string ToString()
+        private string ParseQuery()
         {
             string orderByColumns = string.Empty;
             var joins = new StringBuilder();
@@ -316,6 +316,11 @@ namespace Insula.Data.Orm
             }
 
             return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return this.ParseQuery();
         }
     }
 }
