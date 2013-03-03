@@ -19,28 +19,28 @@ namespace Insula.Common
             return string.IsNullOrEmpty(target) || target.Trim().Length == 0;
         }
 
-        public static bool ContainsAny(this string target, IEnumerable<string> values)
+        public static bool ContainsAny(this string target, IEnumerable<string> strings)
         {
-            if (values.IsNullOrEmpty())
+            if (target.IsNullOrEmpty() || strings.IsNullOrEmpty())
                 return false;
 
-            foreach (var value in values)
+            foreach (var s in strings)
             {
-                if (target.Contains(value))
+                if (target.Contains(s))
                     return true;
             }
 
             return false;
         }
 
-        public static bool ContainsAll(this string target, IEnumerable<string> values)
+        public static bool ContainsAll(this string target, IEnumerable<string> strings)
         {
-            if (values.IsNullOrEmpty())
+            if (target.IsNullOrEmpty() || strings.IsNullOrEmpty())
                 return false;
 
-            foreach (var value in values)
+            foreach (var s in strings)
             {
-                if (!target.Contains(value))
+                if (!target.Contains(s))
                     return false;
             }
 
@@ -50,8 +50,6 @@ namespace Insula.Common
         /// <summary>
         /// Trims the string and replaces occurrences of multiple space characters with single space character.
         /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
         public static string CleanSpaces(this string target)
         {
             if (target.IsNullOrEmpty())
@@ -68,11 +66,11 @@ namespace Insula.Common
         }
 
         /// <summary>
-        /// Calls String.Format method using CultureInfo.InvariantCulture.
+        /// Calls String.Format method using passed IFormatProvider (CultureInfo).
         /// </summary>
-        public static string FormatInvariant(this string target, params object[] args)
+        public static string Format(this string target, IFormatProvider provider, params object[] args)
         {
-            return string.Format(CultureInfo.InvariantCulture, target, args);
+            return string.Format(provider, target, args);
         }
 
         /// <summary>
@@ -84,11 +82,11 @@ namespace Insula.Common
         }
 
         /// <summary>
-        /// Calls String.Format method using passed IFormatProvider (CultureInfo).
+        /// Calls String.Format method using CultureInfo.InvariantCulture.
         /// </summary>
-        public static string Format(this string target, IFormatProvider provider, params object[] args)
+        public static string FormatInvariant(this string target, params object[] args)
         {
-            return string.Format(provider, target, args);
+            return string.Format(CultureInfo.InvariantCulture, target, args);
         }
     }
 }

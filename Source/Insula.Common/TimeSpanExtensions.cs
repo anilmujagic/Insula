@@ -13,16 +13,16 @@ namespace Insula.Common
             return ToLongString(target, false);
         }
 
-        public static string ToLongString(this TimeSpan target, bool alwaysShowMilliseconds)
+        public static string ToLongString(this TimeSpan target, bool hideMillisecondsIfLongerThanOneSecond)
         {
             var description = target.Milliseconds.ToString(CultureInfo.InvariantCulture) + "ms";
 
             if (target.TotalSeconds >= 1)
             {
-                if (alwaysShowMilliseconds)
-                    description = ", " + description;
-                else
+                if (hideMillisecondsIfLongerThanOneSecond)
                     description = string.Empty;
+                else
+                    description = ", " + description;
 
                 description = target.Seconds.ToString(CultureInfo.InvariantCulture) + "s" + description;
             }
