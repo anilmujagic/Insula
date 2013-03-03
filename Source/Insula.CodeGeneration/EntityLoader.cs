@@ -29,7 +29,7 @@ namespace Insula.CodeGeneration
                     var member = new EntityMember
                     {
                         Name = column.Name,
-                        DataType = DataTypeInfo.CreateFromSqlDataTypeName(column.DataType, column.IsNullable),
+                        DataType = DataTypeInfo.FromSqlDataTypeName(column.DataType, column.IsNullable),
                         MaxLength = column.MaxLength,
                         DecimalPlaces = column.DecimalPlaces,
                         IsNullable = column.IsNullable,

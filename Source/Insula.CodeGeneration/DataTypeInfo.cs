@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using Insula.Common;
 
 namespace Insula.CodeGeneration
 {
@@ -34,8 +35,11 @@ namespace Insula.CodeGeneration
             this.SqlDataTypeName = sqlDataTypeName;
         }
 
-        public static DataTypeInfo CreateFromSqlDataTypeName(string sqlDataTypeName, bool isNullable)
+        public static DataTypeInfo FromSqlDataTypeName(string sqlDataTypeName, bool isNullable)
         {
+            if (sqlDataTypeName.IsNullOrEmpty())
+                throw new ArgumentException("sqlDataTypeName must have a value.");
+
             var dataTypeInfo = new DataTypeInfo();
             dataTypeInfo.SetDataTypeInfo(typeof(object), "object", string.Empty, isNullable && false);
 

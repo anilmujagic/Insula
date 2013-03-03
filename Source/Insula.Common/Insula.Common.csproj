@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
