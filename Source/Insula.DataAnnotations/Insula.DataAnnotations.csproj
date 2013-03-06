@@ -46,6 +46,9 @@
     <None Include="Insula.DataAnnotations.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MasterAssemblyInfo.cs">
+      <Link>Properties\MasterAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Schema\IdentityAttribute.cs" />
     <Compile Include="Schema\MappedAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

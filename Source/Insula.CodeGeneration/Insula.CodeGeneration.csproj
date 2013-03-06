@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MasterAssemblyInfo.cs">
+      <Link>Properties\MasterAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="EntityLoader.cs" />
     <Compile Include="EntityMember.cs" />
     <Compile Include="EntityMemberCollection.cs" />

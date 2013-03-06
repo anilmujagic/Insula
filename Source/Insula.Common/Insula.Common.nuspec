@@ -6,11 +6,11 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/anilmujagic/Insula.Common</projectUrl>
+    <projectUrl>https://github.com/anilmujagic/Insula</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright by Anil Mujagic</copyright>
-    <tags>Insula</tags>
+    <copyright></copyright>
+    <tags>Insula Common Helpers Utils</tags>
   </metadata>
 </package>

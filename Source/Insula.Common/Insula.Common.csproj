@@ -46,6 +46,9 @@
     <None Include="Insula.Common.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MasterAssemblyInfo.cs">
+      <Link>Properties\MasterAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />

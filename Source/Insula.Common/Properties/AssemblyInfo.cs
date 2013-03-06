@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Insula.Common")]
 [assembly: AssemblyDescription("Common functionality used by other Insula projects")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Anil Mujagic")]
 [assembly: AssemblyProduct("Insula.Common")]
-[assembly: AssemblyCopyright("Copyright © Anil Mujagic")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -28,7 +26,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyInformationalVersion("1.0.1")]
 
 // CLS Compliance
 [assembly: CLSCompliant(true)]
