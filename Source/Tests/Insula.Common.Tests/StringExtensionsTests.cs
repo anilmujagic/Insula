@@ -17,5 +17,17 @@ namespace Insula.Common.Tests
                 Assert.Equal<string>("My dirty string", " My dirty  string  ".CleanSpaces());
             }
         }
+
+        public class FormatStringMethod
+        {
+            [Fact]
+            public void FormatStringIsEqualToDotNetMethod()
+            {
+                var foo = "Foo {0}";
+                var bar = "Bar";
+
+                Assert.Equal<string>(string.Format(foo, bar), foo.FormatString(bar));
+            }
+        }
     }
 }

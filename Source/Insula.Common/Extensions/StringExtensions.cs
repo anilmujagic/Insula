@@ -68,7 +68,7 @@ namespace Insula.Common
         /// <summary>
         /// Calls String.Format method using passed IFormatProvider (CultureInfo).
         /// </summary>
-        public static string Format(this string target, IFormatProvider provider, params object[] args)
+        public static string FormatString(this string target, IFormatProvider provider, params object[] args)
         {
             return string.Format(provider, target, args);
         }
@@ -76,7 +76,7 @@ namespace Insula.Common
         /// <summary>
         /// Calls String.Format method using CultureInfo.CurrentCulture.
         /// </summary>
-        public static string Format(this string target, params object[] args)
+        public static string FormatString(this string target, params object[] args)
         {
             return string.Format(CultureInfo.CurrentCulture, target, args);
         }
