@@ -168,7 +168,7 @@ namespace Insula.Data.Orm
 
         public virtual void OnException(Exception exception, string sql)
         {
-            var message = string.Join(Environment.NewLine, exception.GetExceptionTree());
+            var message = string.Join(Environment.NewLine, exception.GetExceptionTreeAsFlatList());
             System.Diagnostics.Debug.WriteLine(message);
             System.Diagnostics.Debug.WriteLine(sql);
         }

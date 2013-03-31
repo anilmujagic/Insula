@@ -9,7 +9,7 @@ namespace Insula.Common
 {
     public static class ExceptionExtensions
     {
-        public static IEnumerable<Exception> GetExceptionTree(this Exception target)
+        public static IEnumerable<Exception> GetExceptionTreeAsFlatList(this Exception target)
         {
             var exceptions = new List<Exception>();
 
