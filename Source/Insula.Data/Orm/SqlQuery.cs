@@ -71,12 +71,13 @@ namespace Insula.Data.Orm
             if (!_where.IsNullOrWhiteSpace())
                 throw new InvalidOperationException("WHERE clause is already set.");
 
-            var columns = new Dictionary<string, object>();
+            var columns = new List<Tuple<int, string, object>>();
 
             var properties = columnValueFilters.GetType().GetProperties();
 
             if (properties.Length > 0)
             {
+                var position = 0;
                 foreach (var p in properties)
                 {
                     var type = p.PropertyType;
@@ -84,15 +85,16 @@ namespace Insula.Data.Orm
                     var value = p.GetValue(columnValueFilters, null);
                     if (!(value.Equals(defaultValue) && !includePropertiesHavingDefaultTypeValue))
                     {
-                        columns.Add(p.Name, value);
+                        columns.Add(new Tuple<int, string, object>(position, p.Name, value));
+                        position++;
                     }
                 }
 
                 _where = string.Join(" AND ", columns
-                    .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{0}", c.Key)));
+                    .Select(c => string.Format(CultureInfo.InvariantCulture, "[{0}] = @{1}", c.Item2, c.Item1)));
 
                 _parameters = columns
-                    .Select(c => c.Value)
+                    .Select(c => c.Item3)
                     .ToArray();
             }
 

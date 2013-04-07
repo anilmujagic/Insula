@@ -37,8 +37,8 @@ namespace Insula.Data.Orm.Tests
                         .ToString();
 
                     Assert.Contains("WHERE", query);
-                    Assert.Contains("@FirstName", query);
-                    Assert.Contains("@LastName", query);
+                    Assert.Contains("[FirstName] = @0", query);
+                    Assert.Contains("[LastName] = @1", query);
                 }
             }
 
@@ -55,8 +55,8 @@ namespace Insula.Data.Orm.Tests
                         .ToString();
 
                     Assert.Contains("WHERE", query);
-                    Assert.Contains("@Name", query);
                     Assert.DoesNotContain("@AuthorID", query);
+                    Assert.Contains("[Name] = @0", query);
                 }
             }
 
@@ -73,8 +73,8 @@ namespace Insula.Data.Orm.Tests
                         .ToString();
 
                     Assert.Contains("WHERE", query);
-                    Assert.Contains("@Name", query);
-                    Assert.Contains("@AuthorID", query);
+                    Assert.Contains("[AuthorID] = @0", query);
+                    Assert.Contains("[Name] = @1", query);
                 }
             }
         }
