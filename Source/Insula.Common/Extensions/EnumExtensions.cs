@@ -9,6 +9,9 @@ namespace Insula.Common
     {
         public static string GetName(this Enum target)
         {
+            if (target == null)
+                return null;
+
             return Enum.GetName(target.GetType(), target);
         }
     }
