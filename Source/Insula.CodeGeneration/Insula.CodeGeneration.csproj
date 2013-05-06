@@ -70,10 +70,6 @@
       <Project>{E925D45A-CEB6-4618-970E-4F3D41B32117}</Project>
       <Name>Insula.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Insula.Data\Insula.Data.csproj">
-      <Project>{F8A372B0-61A6-4A19-8C25-D48B8129559C}</Project>
-      <Name>Insula.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
