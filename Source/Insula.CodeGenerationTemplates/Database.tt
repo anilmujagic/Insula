@@ -9,12 +9,7 @@ namespace <#= codeNamespace #>
     public partial class <#= databaseClassName #> : Database
     {
         public <#= databaseClassName #>()
-            : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString)
-        {
-        }
-
-        public <#= databaseClassName #>(bool keepConnectionOpen)
-            : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString, keepConnectionOpen)
+            : base(DatabaseEngine.SqlServer, System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString)
         {
         }
 

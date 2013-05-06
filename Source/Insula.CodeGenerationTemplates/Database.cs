@@ -10,12 +10,7 @@ namespace MyApp.Data
     public partial class MyAppDatabase : Database
     {
         public MyAppDatabase()
-            : base(System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString)
-        {
-        }
-
-        public MyAppDatabase(bool keepConnectionOpen)
-            : base(System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString, keepConnectionOpen)
+            : base(DatabaseEngine.SqlServer, System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString)
         {
         }
 
