@@ -9,14 +9,14 @@ namespace MyApp.Data
 {
     public partial class AuthorRepository : Repository<Author>
     {
-        public AuthorRepository(MyAppDatabaseContext context)
-            : base(context)
+        public AuthorRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Author GetByKey(int authorID)
         {
-            return this.Query().Where("[AuthorID] = @0", authorID).GetSingle();  
+            return this.Query().Where(new { AuthorID = authorID }).GetSingle();  
         }
         
         public void DeleteByKey(int authorID)
@@ -28,14 +28,14 @@ namespace MyApp.Data
 
     public partial class BookRepository : Repository<Book>
     {
-        public BookRepository(MyAppDatabaseContext context)
-            : base(context)
+        public BookRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Book GetByKey(int bookID)
         {
-            return this.Query().Where("[BookID] = @0", bookID).GetSingle();  
+            return this.Query().Where(new { BookID = bookID }).GetSingle();  
         }
         
         public void DeleteByKey(int bookID)
@@ -47,14 +47,14 @@ namespace MyApp.Data
 
     public partial class BookAuthorRepository : Repository<BookAuthor>
     {
-        public BookAuthorRepository(MyAppDatabaseContext context)
-            : base(context)
+        public BookAuthorRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public BookAuthor GetByKey(int bookID, int authorID)
         {
-            return this.Query().Where("[BookID] = @0 AND [AuthorID] = @1", bookID, authorID).GetSingle();  
+            return this.Query().Where(new { BookID = bookID, AuthorID = authorID }).GetSingle();  
         }
         
         public void DeleteByKey(int bookID, int authorID)
@@ -66,14 +66,14 @@ namespace MyApp.Data
 
     public partial class BookTagRepository : Repository<BookTag>
     {
-        public BookTagRepository(MyAppDatabaseContext context)
-            : base(context)
+        public BookTagRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public BookTag GetByKey(int bookID, short tagID)
         {
-            return this.Query().Where("[BookID] = @0 AND [TagID] = @1", bookID, tagID).GetSingle();  
+            return this.Query().Where(new { BookID = bookID, TagID = tagID }).GetSingle();  
         }
         
         public void DeleteByKey(int bookID, short tagID)
@@ -85,14 +85,14 @@ namespace MyApp.Data
 
     public partial class RatingRepository : Repository<Rating>
     {
-        public RatingRepository(MyAppDatabaseContext context)
-            : base(context)
+        public RatingRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Rating GetByKey(int bookID, byte ratingSourceID)
         {
-            return this.Query().Where("[BookID] = @0 AND [RatingSourceID] = @1", bookID, ratingSourceID).GetSingle();  
+            return this.Query().Where(new { BookID = bookID, RatingSourceID = ratingSourceID }).GetSingle();  
         }
         
         public void DeleteByKey(int bookID, byte ratingSourceID)
@@ -104,14 +104,14 @@ namespace MyApp.Data
 
     public partial class RatingSourceRepository : Repository<RatingSource>
     {
-        public RatingSourceRepository(MyAppDatabaseContext context)
-            : base(context)
+        public RatingSourceRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public RatingSource GetByKey(byte ratingSourceID)
         {
-            return this.Query().Where("[RatingSourceID] = @0", ratingSourceID).GetSingle();  
+            return this.Query().Where(new { RatingSourceID = ratingSourceID }).GetSingle();  
         }
         
         public void DeleteByKey(byte ratingSourceID)
@@ -123,14 +123,14 @@ namespace MyApp.Data
 
     public partial class ReminderRepository : Repository<Reminder>
     {
-        public ReminderRepository(MyAppDatabaseContext context)
-            : base(context)
+        public ReminderRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Reminder GetByKey(int reminderID)
         {
-            return this.Query().Where("[ReminderID] = @0", reminderID).GetSingle();  
+            return this.Query().Where(new { ReminderID = reminderID }).GetSingle();  
         }
         
         public void DeleteByKey(int reminderID)
@@ -142,14 +142,14 @@ namespace MyApp.Data
 
     public partial class ReviewRepository : Repository<Review>
     {
-        public ReviewRepository(MyAppDatabaseContext context)
-            : base(context)
+        public ReviewRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Review GetByKey(int reviewID)
         {
-            return this.Query().Where("[ReviewID] = @0", reviewID).GetSingle();  
+            return this.Query().Where(new { ReviewID = reviewID }).GetSingle();  
         }
         
         public void DeleteByKey(int reviewID)
@@ -161,14 +161,14 @@ namespace MyApp.Data
 
     public partial class SuggestedBookRepository : Repository<SuggestedBook>
     {
-        public SuggestedBookRepository(MyAppDatabaseContext context)
-            : base(context)
+        public SuggestedBookRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public SuggestedBook GetByKey(int suggestedBookID)
         {
-            return this.Query().Where("[SuggestedBookID] = @0", suggestedBookID).GetSingle();  
+            return this.Query().Where(new { SuggestedBookID = suggestedBookID }).GetSingle();  
         }
         
         public void DeleteByKey(int suggestedBookID)
@@ -180,14 +180,14 @@ namespace MyApp.Data
 
     public partial class SuggestedBookSubscriptionRepository : Repository<SuggestedBookSubscription>
     {
-        public SuggestedBookSubscriptionRepository(MyAppDatabaseContext context)
-            : base(context)
+        public SuggestedBookSubscriptionRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public SuggestedBookSubscription GetByKey(int suggestedBookSubscriptionID)
         {
-            return this.Query().Where("[SuggestedBookSubscriptionID] = @0", suggestedBookSubscriptionID).GetSingle();  
+            return this.Query().Where(new { SuggestedBookSubscriptionID = suggestedBookSubscriptionID }).GetSingle();  
         }
         
         public void DeleteByKey(int suggestedBookSubscriptionID)
@@ -199,14 +199,14 @@ namespace MyApp.Data
 
     public partial class TagRepository : Repository<Tag>
     {
-        public TagRepository(MyAppDatabaseContext context)
-            : base(context)
+        public TagRepository(MyAppDatabase database)
+            : base(database)
         {
         }
         
         public Tag GetByKey(short tagID)
         {
-            return this.Query().Where("[TagID] = @0", tagID).GetSingle();  
+            return this.Query().Where(new { TagID = tagID }).GetSingle();  
         }
         
         public void DeleteByKey(short tagID)

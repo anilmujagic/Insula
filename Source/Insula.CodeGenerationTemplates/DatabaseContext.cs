@@ -7,14 +7,14 @@ using Insula.Data.Orm;
 
 namespace MyApp.Data
 {
-    public partial class MyAppDatabaseContext : DatabaseContext
+    public partial class MyAppDatabase : Database
     {
-        public MyAppDatabaseContext()
+        public MyAppDatabase()
             : base(System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString)
         {
         }
 
-        public MyAppDatabaseContext(bool keepConnectionOpen)
+        public MyAppDatabase(bool keepConnectionOpen)
             : base(System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString, keepConnectionOpen)
         {
         }

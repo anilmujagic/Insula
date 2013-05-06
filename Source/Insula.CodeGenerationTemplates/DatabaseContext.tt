@@ -6,14 +6,14 @@ using Insula.Data.Orm;
 
 namespace <#= codeNamespace #>
 {
-    public partial class <#= databaseContextName #> : DatabaseContext
+    public partial class <#= databaseClassName #> : Database
     {
-        public <#= databaseContextName #>()
+        public <#= databaseClassName #>()
             : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString)
         {
         }
 
-        public <#= databaseContextName #>(bool keepConnectionOpen)
+        public <#= databaseClassName #>(bool keepConnectionOpen)
             : base(System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString, keepConnectionOpen)
         {
         }

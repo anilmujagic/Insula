@@ -11,7 +11,7 @@
     //  Variables used in code templates  //
     ////////////////////////////////////////
     var codeNamespace = "MyApp.Data";
-    var databaseContextName = "MyAppDatabaseContext";
+    var databaseClassName = "MyAppDatabase";
     var connectionStringName = "MyAppDB";
     var generateStronglyTyped_GetByKey_And_DeleteByKey_RepositoryMethods = true;
     
@@ -20,6 +20,7 @@
     ////////////////////////////////////////////////////////////////////
     var entities = EntityLoader.LoadFromDatabase("Data Source=.\\SQLEXPRESS;Initial Catalog=ITBookRatingsDB;Integrated Security=SSPI");
     entities.RemoveAll(e => e.Name.StartsWith("aspnet_"));  //Remove ASP.NET Membership/Role Provider schema tables
+    entities.RemoveAll(e => e.Name.StartsWith("webpages_"));  //Remove ASP.NET SimpleMembership/Role Provider schema tables
     //entities["Book"].Members.RemoveAll(m => m.Name == "ISBN10");  //Remove particular field
 #>
 /////////////////////////////////////////////////////////////////////////////////////////////
