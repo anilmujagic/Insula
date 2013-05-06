@@ -45,10 +45,10 @@
     <Compile Include="..\MasterAssemblyInfo.cs">
       <Link>Properties\MasterAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DatabaseContext.cs">
+    <Compile Include="Database.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseContext.tt</DependentUpon>
+      <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Models.cs">
       <AutoGen>True</AutoGen>
@@ -67,9 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeGeneration.ttinclude" />
-    <None Include="DatabaseContext.tt">
+    <None Include="Database.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DatabaseContext.cs</LastGenOutput>
+      <LastGenOutput>Database.cs</LastGenOutput>
     </None>
     <None Include="Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
