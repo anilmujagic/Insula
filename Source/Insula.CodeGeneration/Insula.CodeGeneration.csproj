@@ -12,6 +12,8 @@
     <AssemblyName>Insula.CodeGeneration</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,8 +42,17 @@
     <AssemblyOriginatorKeyFile>Insula.CodeGeneration.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Insula.Data">
-      <HintPath>..\..\Libraries\Insula.Data.dll</HintPath>
+    <Reference Include="Insula.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ebaf64824cc18f38, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Insula.Common.1.0.3\lib\portable-win+net40+sl40+wp\Insula.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Insula.Data, Version=0.1.0.0, Culture=neutral, PublicKeyToken=3b2f5f3fcd8a5b1e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Insula.Data.0.1.1\lib\net40\Insula.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Insula.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00dbf8d5f8f890e5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Insula.DataAnnotations.1.0.0\lib\portable-win+net40+sl40+wp\Insula.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,14 +78,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Insula.CodeGeneration.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Insula.Common\Insula.Common.csproj">
-      <Project>{E925D45A-CEB6-4618-970E-4F3D41B32117}</Project>
-      <Name>Insula.Common</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
