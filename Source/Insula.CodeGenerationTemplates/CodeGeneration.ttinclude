@@ -1,5 +1,6 @@
 ﻿<#@ assembly name="System.Core" #>
 <#@ assembly name="$(SolutionDir)Insula.Common\bin\Release\Insula.Common.dll" #>
+<#@ assembly name="$(SolutionDir)packages\Insula.Data.0.2.0\lib\net40\Insula.Data.dll" #>
 <#@ assembly name="$(SolutionDir)Insula.CodeGeneration\bin\Release\Insula.CodeGeneration.dll" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Collections.Generic" #>
