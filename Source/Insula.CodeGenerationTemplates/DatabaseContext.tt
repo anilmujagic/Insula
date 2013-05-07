@@ -6,9 +6,9 @@ using Insula.Data.Orm;
 
 namespace <#= codeNamespace #>
 {
-    public partial class <#= databaseClassName #> : Database
+    public partial class <#= databaseContextName #> : DatabaseContext
     {
-        public <#= databaseClassName #>()
+        public <#= databaseContextName #>()
             : base(DatabaseEngine.SqlServer, System.Configuration.ConfigurationManager.ConnectionStrings["<#= connectionStringName #>"].ConnectionString)
         {
         }

@@ -11,7 +11,7 @@
     //  Variables used in code templates  //
     ////////////////////////////////////////
     var codeNamespace = "MyApp.Data";
-    var databaseClassName = "MyAppDatabase";
+    var databaseContextName = "MyAppDatabaseContext";
     var connectionStringName = "MyAppDB";
     var generateStronglyTyped_GetByKey_And_DeleteByKey_RepositoryMethods = true;
     

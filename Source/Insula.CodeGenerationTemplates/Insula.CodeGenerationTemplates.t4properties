@@ -17,7 +17,7 @@
       <Value>VisualStudio</Value>
     </TransformationPropertyValue>
     <TransformationPropertyValue>
-      <FileName>Database.tt</FileName>
+      <FileName>DatabaseContext.tt</FileName>
       <PropertyName>Host</PropertyName>
       <Value>VisualStudio</Value>
     </TransformationPropertyValue>

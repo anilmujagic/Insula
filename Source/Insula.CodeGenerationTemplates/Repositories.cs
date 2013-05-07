@@ -9,8 +9,8 @@ namespace MyApp.Data
 {
     public partial class AuthorRepository : Repository<Author>
     {
-        public AuthorRepository(MyAppDatabase database)
-            : base(database)
+        public AuthorRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -28,8 +28,8 @@ namespace MyApp.Data
 
     public partial class BookRepository : Repository<Book>
     {
-        public BookRepository(MyAppDatabase database)
-            : base(database)
+        public BookRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -47,8 +47,8 @@ namespace MyApp.Data
 
     public partial class BookAuthorRepository : Repository<BookAuthor>
     {
-        public BookAuthorRepository(MyAppDatabase database)
-            : base(database)
+        public BookAuthorRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -66,8 +66,8 @@ namespace MyApp.Data
 
     public partial class BookTagRepository : Repository<BookTag>
     {
-        public BookTagRepository(MyAppDatabase database)
-            : base(database)
+        public BookTagRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -85,8 +85,8 @@ namespace MyApp.Data
 
     public partial class RatingRepository : Repository<Rating>
     {
-        public RatingRepository(MyAppDatabase database)
-            : base(database)
+        public RatingRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -104,8 +104,8 @@ namespace MyApp.Data
 
     public partial class RatingSourceRepository : Repository<RatingSource>
     {
-        public RatingSourceRepository(MyAppDatabase database)
-            : base(database)
+        public RatingSourceRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -123,8 +123,8 @@ namespace MyApp.Data
 
     public partial class ReminderRepository : Repository<Reminder>
     {
-        public ReminderRepository(MyAppDatabase database)
-            : base(database)
+        public ReminderRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -142,8 +142,8 @@ namespace MyApp.Data
 
     public partial class ReviewRepository : Repository<Review>
     {
-        public ReviewRepository(MyAppDatabase database)
-            : base(database)
+        public ReviewRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -161,8 +161,8 @@ namespace MyApp.Data
 
     public partial class SuggestedBookRepository : Repository<SuggestedBook>
     {
-        public SuggestedBookRepository(MyAppDatabase database)
-            : base(database)
+        public SuggestedBookRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -180,8 +180,8 @@ namespace MyApp.Data
 
     public partial class SuggestedBookSubscriptionRepository : Repository<SuggestedBookSubscription>
     {
-        public SuggestedBookSubscriptionRepository(MyAppDatabase database)
-            : base(database)
+        public SuggestedBookSubscriptionRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         
@@ -199,8 +199,8 @@ namespace MyApp.Data
 
     public partial class TagRepository : Repository<Tag>
     {
-        public TagRepository(MyAppDatabase database)
-            : base(database)
+        public TagRepository(MyAppDatabaseContext databaseContext)
+            : base(databaseContext)
         {
         }
         

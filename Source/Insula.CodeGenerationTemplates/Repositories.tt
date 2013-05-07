@@ -22,8 +22,8 @@ foreach (var t in entities)
 #>
     public partial class <#= t.Name #>Repository : Repository<<#= t.Name #>>
     {
-        public <#= t.Name #>Repository(<#= databaseClassName #> database)
-            : base(database)
+        public <#= t.Name #>Repository(<#= databaseContextName #> databaseContext)
+            : base(databaseContext)
         {
         }
 <#

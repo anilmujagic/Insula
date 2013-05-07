@@ -7,9 +7,9 @@ using Insula.Data.Orm;
 
 namespace MyApp.Data
 {
-    public partial class MyAppDatabase : Database
+    public partial class MyAppDatabaseContext : DatabaseContext
     {
-        public MyAppDatabase()
+        public MyAppDatabaseContext()
             : base(DatabaseEngine.SqlServer, System.Configuration.ConfigurationManager.ConnectionStrings["MyAppDB"].ConnectionString)
         {
         }
